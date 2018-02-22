@@ -6,7 +6,7 @@ import spark.Spark;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
-import tikape.runko.database.OpiskelijaDao;
+import tikape.runko.database.DrinkkiDao;
 
 public class Main {
 
@@ -17,30 +17,32 @@ public class Main {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
 
-        Database database = new Database("jdbc:sqlite:opiskelijat.db");
-        database.init();
+        Database database = new Database();
+        
+        //database.init();
 
-        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
+         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("viesti", "tervehdys");
-
+            map.put("drinkit", drinkkiDao.findAll());
+            
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        get("/opiskelijat", (req, res) -> {
+//        get("/", (req, res) -> {
+//            HashMap map = new HashMap<>();
+//            map.put("drinkit", drinkkiDao.findAll());
+//
+//            return new ModelAndView(map, "index");
+//        }, new ThymeleafTemplateEngine());
+
+        get("/drinkit/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("opiskelijat", opiskelijaDao.findAll());
+            map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
 
-            return new ModelAndView(map, "opiskelijat");
-        }, new ThymeleafTemplateEngine());
-
-        get("/opiskelijat/:id", (req, res) -> {
-            HashMap map = new HashMap<>();
-            map.put("opiskelija", opiskelijaDao.findOne(Integer.parseInt(req.params("id"))));
-
-            return new ModelAndView(map, "opiskelija");
+            return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
     }
 }
