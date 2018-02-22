@@ -7,6 +7,7 @@ import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.DrinkkiDao;
+import tikape.runko.domain.Drinkki;
 
 public class Main {
 
@@ -30,13 +31,25 @@ public class Main {
             
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        get("/drinkit", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("drinkit", drinkkiDao.findAll());
+            
+            return new ModelAndView(map, "drinkit");
+        }, new ThymeleafTemplateEngine());
 
-//        get("/", (req, res) -> {
-//            HashMap map = new HashMap<>();
-//            map.put("drinkit", drinkkiDao.findAll());
-//
-//            return new ModelAndView(map, "index");
-//        }, new ThymeleafTemplateEngine());
+        post("/drinkit", (req, res) -> {
+            drinkkiDao.saveOrUpdate(new Drinkki(null, req.queryParams("nimi")));
+            res.redirect("/drinkit");
+            return "";
+        });
+        
+        post("/delete/:id", (req, res) -> {
+           drinkkiDao.delete(Integer.parseInt(req.params("id")));
+           res.redirect("/drinkit");
+           return "";
+        });
 
         get("/drinkit/:id", (req, res) -> {
             HashMap map = new HashMap<>();

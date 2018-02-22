@@ -12,19 +12,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Drinkki;
+import tikape.runko.domain.RaakaAine;
 
-public class DrinkkiDao implements Dao<Drinkki, Integer> {
+public class RaakaAineDao implements Dao<RaakaAine, Integer> {
 
     private Database database;
 
-    public DrinkkiDao(Database database) {
+    public RaakaAineDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Drinkki findOne(Integer key) throws SQLException {
+    public RaakaAine findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Drinkki WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM RaakaAine WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -36,41 +37,41 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
         Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
-        Drinkki d = new Drinkki(id, nimi);
+        RaakaAine r = new RaakaAine(id, nimi);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return d;
+        return r;
     }
 
     @Override
-    public List<Drinkki> findAll() throws SQLException {
+    public List<RaakaAine> findAll() throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Drinkki");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM RaakaAine");
 
         ResultSet rs = stmt.executeQuery();
-        List<Drinkki> drinkit = new ArrayList<>();
+        List<RaakaAine> raakaAineet = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
 
-            drinkit.add(new Drinkki(id, nimi));
+            raakaAineet.add(new RaakaAine(id, nimi));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return drinkit;
+        return raakaAineet;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Drinkki WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM RaakaAine WHERE id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();
@@ -80,7 +81,7 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
     }
 
     @Override
-    public Drinkki saveOrUpdate(Drinkki object) throws SQLException {
+    public RaakaAine saveOrUpdate(RaakaAine object) throws SQLException {
         if (object.getId() == null) {
             return save(object);
         } else {
@@ -88,47 +89,47 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
         }
     }
 
-    private Drinkki save(Drinkki drinkki) throws SQLException {
+    private RaakaAine save(RaakaAine raakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Drinkki"
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO RaakaAine"
                 + " (nimi)"
                 + " VALUES (?)");
-        stmt.setString(1, drinkki.getNimi());
+        stmt.setString(1, raakaAine.getNimi());
 
         stmt.executeUpdate();
         stmt.close();
 
-        stmt = conn.prepareStatement("SELECT * FROM Drinkki"
+        stmt = conn.prepareStatement("SELECT * FROM RaakaAine"
                 + " WHERE nimi = ?");
-        stmt.setString(1, drinkki.getNimi());
+        stmt.setString(1, raakaAine.getNimi());
 
         ResultSet rs = stmt.executeQuery();
         rs.next();
 
-        Drinkki d = new Drinkki(rs.getInt("id"), rs.getString("nimi"));
+        RaakaAine r = new RaakaAine(rs.getInt("id"), rs.getString("nimi"));
 
         stmt.close();
         rs.close();
 
         conn.close();
 
-        return d;
+        return r;
     }
 
-    private Drinkki update(Drinkki drinkki) throws SQLException {
+    private RaakaAine update(RaakaAine raakaAine) throws SQLException {
 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("UPDATE Drinkki SET"
+        PreparedStatement stmt = conn.prepareStatement("UPDATE RaakaAine SET"
                 + " nimi = ? WHERE id = ?");
-        stmt.setString(1, drinkki.getNimi());
-        stmt.setInt(2, drinkki.getId());
+        stmt.setString(1, raakaAine.getNimi());
+        stmt.setInt(2, raakaAine.getId());
 
         stmt.executeUpdate();
 
         stmt.close();
         conn.close();
 
-        return drinkki;
+        return raakaAine;
     }
 }

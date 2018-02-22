@@ -6,13 +6,27 @@
         <meta charset="utf-8" />
     </head>
 
-    <body>
-        <h1>Drinkkilista</h1>
+    <body style="background-color: #ccccff">
+        <h1 style="color:#33ccff; font-family: Comic Sans MS, Comic Sans, cursive;">Drinkit</h1>
 
+        
         <ol>
             <li th:each="drinkki: ${drinkit}">
-                <span th:text="${drinkki.nimi}">drinkin nimi</span> <a th:href="${'/drinkit/' + drinkki.id}">linkki</a>
+                <span style="color: #990099; font-family: fantasy;" th:text="${drinkki.nimi}">drinkin nimi</span> 
+                <form th:action="@{~/delete/{id}(id=${drinkki.id})}" method="POST">
+                    <input type="submit" value="Poista"/>
+                </form>
             </li>
         </ol>
+        
+        <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
+        <form method="POST" action="/drinkit">
+            <span>Drinkin nimi:</span><br/>
+            <input type="text" name="nimi"/><br/>
+            <input type="submit" value="Lisää"/>
+        </form>
+        
+        <p><a style="color: #33ff00; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
+        
     </body>
 </html>

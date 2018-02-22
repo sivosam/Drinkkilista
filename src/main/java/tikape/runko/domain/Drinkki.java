@@ -1,29 +1,11 @@
 package tikape.runko.domain;
 
-public class Drinkki {
+public class Drinkki extends AbstraktiNimettyObjekti {
 
     private Integer id;
     private String nimi;
 
     public Drinkki(Integer id, String nimi) {
-        this.id = id;
-        this.nimi = nimi;
+        super(id, nimi);
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNimi() {
-        return nimi;
-    }
-
-    public void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-
 }
