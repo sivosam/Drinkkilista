@@ -19,10 +19,8 @@ public class Main {
         }
 
         Database database = new Database();
-        
-        //database.init();
 
-         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
+        DrinkkiDao drinkkiDao = new DrinkkiDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
