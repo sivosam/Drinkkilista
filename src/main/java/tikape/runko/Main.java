@@ -48,7 +48,7 @@ public class Main {
             res.redirect("/drinkit");
             return "";
         });
-        
+
         post("/raakaaineet", (req, res) -> {
             if (req.queryParams("nimi").equals("")) {
                 res.redirect("/raakaaineet");
@@ -83,6 +83,13 @@ public class Main {
             map.put("raakaaineet", raakaAineDao.findAll());
 
             return new ModelAndView(map, "raakaaineet");
+        }, new ThymeleafTemplateEngine());
+
+        get("/tilastot", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("raakaaineet", raakaAineDao.findAll());
+
+            return new ModelAndView(map, "tilastot");
         }, new ThymeleafTemplateEngine());
     }
 }
