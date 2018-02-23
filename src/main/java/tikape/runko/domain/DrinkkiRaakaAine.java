@@ -35,4 +35,24 @@ public class DrinkkiRaakaAine {
     public String getOhje() {
         return this.ohje;
     }
+    
+    public void setRaakaAineId(Integer id) {
+        this.raaka_aine_id = id;
+    }
+    
+    public void setDrinkkiId(Integer id) {
+        this.drinkki_id = id;
+    }
+    
+    public void setJarjestys (String jarjestys) {
+        this.jarjestys = jarjestys;
+    }
+    
+    public void setMaara (String maara) {
+        this.maara = maara;
+    }
+    
+    public void setOhje (String ohje) {
+        this.ohje = ohje;
+    }
 }
