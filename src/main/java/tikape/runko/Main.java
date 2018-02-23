@@ -7,6 +7,7 @@ import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.DrinkkiDao;
+import tikape.runko.database.DrinkkiRaakaAineDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Drinkki;
 import tikape.runko.domain.RaakaAine;
@@ -24,6 +25,7 @@ public class Main {
 
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
+        DrinkkiRaakaAineDao drad = new DrinkkiRaakaAineDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -35,6 +37,7 @@ public class Main {
         get("/drinkit", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkit", drinkkiDao.findAll());
+            map.put("raakaaineet", raakaAineDao.findAll());
 
             return new ModelAndView(map, "drinkit");
         }, new ThymeleafTemplateEngine());
@@ -48,7 +51,7 @@ public class Main {
             res.redirect("/drinkit");
             return "";
         });
-        
+
         post("/raakaaineet", (req, res) -> {
             if (req.queryParams("nimi").equals("")) {
                 res.redirect("/raakaaineet");
@@ -74,6 +77,7 @@ public class Main {
         get("/drinkit/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
+            map.put("raakaaineet", drinkkiDao.findAllRaakaAine());
 
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());

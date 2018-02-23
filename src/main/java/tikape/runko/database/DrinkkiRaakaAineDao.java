@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.DrinkkiRaakaAine;
+import tikape.runko.domain.RaakaAine;
 
 public class DrinkkiRaakaAineDao {
 
@@ -18,7 +19,9 @@ public class DrinkkiRaakaAineDao {
 
     public DrinkkiRaakaAine findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM DrinkkiRaakaAine WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM DrinkkiRaakaAine WHERE raaka_aine_id = ?"
+                + " AND drinkki_id = ?");
+
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -65,7 +68,7 @@ public class DrinkkiRaakaAineDao {
 
         return drat;
     }
-    
+
     public void delete(Integer key, Integer key2) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM DrinkkiRaakaAine WHERE raaka_aine_id = ?"
@@ -139,4 +142,6 @@ public class DrinkkiRaakaAineDao {
 
         return drinkkira;
     }
+
+
 }

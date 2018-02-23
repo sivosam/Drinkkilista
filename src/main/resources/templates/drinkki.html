@@ -9,6 +9,15 @@
     <body>
         <h1><span th:text="${drinkki.nimi}"></span></h1>
 
-        <p>Resepti: <span th:text="${drinkki.nimi}">drinkki</span> asdasdasd </p>
+        <p>Resepti:</p>
+        
+        <!-- ei toimi -->
+        
+        <ol>
+            <li th:each="raakaaine : ${raakaaineet}">
+                <span th:text="${raakaaine.nimi}">Raaka-aineen nimi</span>
+            </li>
+        </ol>
+        
     </body>
 </html>
