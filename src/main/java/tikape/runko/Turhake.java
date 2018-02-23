@@ -7,8 +7,9 @@ package tikape.runko;
 
 /**
  *
- * @author quokka
+
  */
 public class Turhake {
+    int luku;
     
 }
