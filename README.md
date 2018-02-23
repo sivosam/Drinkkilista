@@ -1,4 +1,4 @@
-# tikape-runko
+# Drinkkilista
 
-Tietokantojen perusteet -kurssilla tehtävän web-sovelluksen pohja.
+Superi sovellus, jonka avulla voit pitää listaa drinkeistäsi ja niiden valmistusohjeista! Jes! 
 

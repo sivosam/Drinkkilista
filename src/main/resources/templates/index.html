@@ -1,4 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
@@ -6,11 +7,15 @@
         <meta charset="utf-8" />
     </head>
 
-    <body>
-        <h1>Heippa vaan!</h1>
+    <body style="background-color: #ccffcc">
+        <h1 style="color:#33ccff; font-family:Comics Sans MS;">Drinkkilista!</h1>
 
-        <p>Ja .. <span th:text="${viesti}">jotain?</span></p>
-
-        <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
+        <ol>
+            <li th:each="drinkki: ${drinkit}">
+                <span th:text="${drinkki.nimi}">drinkin nimi</span> <a th:href="${'/drinkit/' + drinkki.id}">-></a>
+            </li>
+        </ol>
+        <p><a href="/drinkit">Luo uusi drinkki.</a></p>
     </body>
 </html>
+
