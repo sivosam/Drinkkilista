@@ -20,8 +20,7 @@ public class Main {
         }
 
         Database database = new Database();
-
-        //database.init();
+        
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
 

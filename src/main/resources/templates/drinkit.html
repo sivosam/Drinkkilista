@@ -25,8 +25,35 @@
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
-
+        
+        
+        <h4>Lisää raaka-aineita</h4>
+        <form method="POST" action="/drinkit">
+      Drinkin nimi:<br/>
+              <select> <option th:each="drinkit : ${drinkit}" th:text="${drinkit.nimi}">
+          
+          </option>
+        
+      </select>
+      <br/>
+      Lisättävä raaka-aine<br/>
+      <select> <option th:each="RaakaAine : ${RaakaAine}" th:text="${RaakaAine.nimi}">
+          
+          </option>
+      </select>
+      <br/>
+      Järjestys<br/>
+      <input type="text"/><br/>
+      Määrä<br/>
+      <input type="text"/><br/>
+      Ohje<br/>
+      <input type="text"/><br/>
+      <input type="submit" value="Lisää"/>
+  </form>
+        
+        
+            
         <p><a style="color: #33ff00; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
-
+        
     </body>
 </html>
