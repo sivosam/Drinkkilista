@@ -19,23 +19,22 @@ public class Main {
         }
 
         Database database = new Database();
-        
-        //database.init();
 
-         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
+        //database.init();
+        DrinkkiDao drinkkiDao = new DrinkkiDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("viesti", "tervehdys");
             map.put("drinkit", drinkkiDao.findAll());
-            
+
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
+
         get("/drinkit", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkit", drinkkiDao.findAll());
-            
+
             return new ModelAndView(map, "drinkit");
         }, new ThymeleafTemplateEngine());
 
@@ -44,11 +43,11 @@ public class Main {
             res.redirect("/drinkit");
             return "";
         });
-        
+
         post("/delete/:id", (req, res) -> {
-           drinkkiDao.delete(Integer.parseInt(req.params("id")));
-           res.redirect("/drinkit");
-           return "";
+            drinkkiDao.delete(Integer.parseInt(req.params("id")));
+            res.redirect("/drinkit");
+            return "";
         });
 
         get("/drinkit/:id", (req, res) -> {
@@ -56,6 +55,13 @@ public class Main {
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
 
             return new ModelAndView(map, "drinkki");
+        }, new ThymeleafTemplateEngine());
+
+        get("/raaka-aineet", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("raaka-aineet", drinkkiDao.findAll());
+
+            return new ModelAndView(map, "raaka-aineet");
         }, new ThymeleafTemplateEngine());
     }
 }
