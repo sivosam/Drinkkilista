@@ -88,5 +88,12 @@ public class Main {
 
             return new ModelAndView(map, "raakaaineet");
         }, new ThymeleafTemplateEngine());
+
+        get("/tilastot", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("raakaaineet", raakaAineDao.findAll());
+
+            return new ModelAndView(map, "tilastot");
+        }, new ThymeleafTemplateEngine());
     }
 }
