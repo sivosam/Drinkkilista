@@ -59,11 +59,11 @@ public class Main {
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
 
-        get("/raaka-aineet", (req, res) -> {
+        get("/raakaaineet", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("raaka-aineet", raakaAineDao.findAll());
+            map.put("raakaaineet", raakaAineDao.findAll());
 
-            return new ModelAndView(map, "raaka-aineet");
+            return new ModelAndView(map, "raakaaineet");
         }, new ThymeleafTemplateEngine());
     }
 }
