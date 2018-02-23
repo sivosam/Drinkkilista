@@ -9,6 +9,7 @@ import tikape.runko.database.Database;
 import tikape.runko.database.DrinkkiDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Drinkki;
+import tikape.runko.domain.RaakaAine;
 
 public class Main {
 
@@ -20,13 +21,12 @@ public class Main {
         }
 
         Database database = new Database();
-        
+
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
             map.put("drinkit", drinkkiDao.findAll());
 
             return new ModelAndView(map, "index");
@@ -40,14 +40,34 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         post("/drinkit", (req, res) -> {
+            if (req.queryParams("nimi").equals("")) {
+                res.redirect("/drinkit");
+                return "";
+            }
             drinkkiDao.saveOrUpdate(new Drinkki(null, req.queryParams("nimi")));
             res.redirect("/drinkit");
+            return "";
+        });
+        
+        post("/raakaaineet", (req, res) -> {
+            if (req.queryParams("nimi").equals("")) {
+                res.redirect("/raakaaineet");
+                return "";
+            }
+            raakaAineDao.saveOrUpdate(new RaakaAine(null, req.queryParams("nimi")));
+            res.redirect("/raakaaineet");
             return "";
         });
 
         post("/delete/:id", (req, res) -> {
             drinkkiDao.delete(Integer.parseInt(req.params("id")));
             res.redirect("/drinkit");
+            return "";
+        });
+
+        post("/deletera/:id", (req, res) -> {
+            raakaAineDao.delete(Integer.parseInt(req.params("id")));
+            res.redirect("/raakaaineet");
             return "";
         });
 

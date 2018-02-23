@@ -12,12 +12,14 @@
 
         <ol>
             <li th:each="raakaaine: ${raakaaineet}">
-                <span style="color: #990099; font-family: fantasy;" th:text="${raakaaine.nimi}">raaka-aineen nimi</span> 
-                <form th:action="@{~/delete/{id}(id=${raakaaine.id})}" method="POST">
+                <span th:text="${raakaaine.nimi}">raaka-aineen nimi</span>
+                <form th:action="@{~/deletera/{id}(id=${raakaaine.id})}" method="POST">
                     <input type="submit" value="Poista"/>
                 </form>
             </li>
         </ol>
+
+
 
         <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
         <form method="POST" action="/raakaaineet">
