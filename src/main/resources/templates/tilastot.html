@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Tilastoja</title>
+        <meta charset="UTF-8"/>
+    </head>
+    
+    <body style="background-color: #ccffcc">
+        <h1 style="color:#33ccff; font-family:Comics Sans MS;">Tilastoja</h1>
+
+        <ol>
+            <li th:each="raakaaine: ${raakaaineet}">
+                <span th:text="${raakaaine.nimi}">raaka-aineen nimi</span><p>:</p>
+            </li>
+        </ol>
+    </body>
+</html>
