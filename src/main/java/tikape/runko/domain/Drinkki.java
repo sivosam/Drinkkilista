@@ -1,7 +1,7 @@
 package tikape.runko.domain;
 
 public class Drinkki extends AbstraktiNimettyObjekti {
-
+//m
     private Integer id;
     private String nimi;
 
