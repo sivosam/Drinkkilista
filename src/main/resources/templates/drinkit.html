@@ -28,9 +28,9 @@
         
         
         <h4>Lisää raaka-aineita</h4>
-        <form method="POST" action="/">
+        <form method="POST" action="/drinkit">
       Drinkin nimi:<br/>
-              <select> <option th:each="drinkki : ${drinkki}" th:text="${drinkki.nimi}">
+              <select> <option th:each="drinkit : ${drinkit}" th:text="${drinkit.nimi}">
           
           </option>
         
