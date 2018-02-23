@@ -10,5 +10,5 @@ package tikape.runko.database;
  * @author saaraemilia
  */
 public class DrinkkiRaakaAineDao {
-    
+    //kommentointia
 }
