@@ -12,12 +12,13 @@
 
         <ol>
             <li th:each="drinkki: ${drinkit}">
-                <span th:text="${drinkki.nimi}">drinkin nimi</span> <a th:href="${'/drinkit/' + drinkki.id}">-></a>
+                <span style="color: #ff5900; font-family: monospace, Comic Sans MS;" th:text="${drinkki.nimi}">drinkin nimi</span> 
+                <a style="font-family: fantasy" th:href="${'/drinkit/' + drinkki.id}">-></a>
             </li>
         </ol>
-        <p><a href="/drinkit">Muokkaa drinkkejä.</a></p>
-        <p><a href="/raakaaineet">Muokkaa raaka-aineita</a></p>
-        <p><a href="/tilastot">Lue tilastoja raaka-aineiden käytöstä.</a></p>
+        <p><a style="color: #ff00f9; font-family: papyrus" href="/drinkit">Muokkaa drinkkejä.</a></p>
+        <p><a style="color: #001dff; font-family: papyrus" href="/raakaaineet">Muokkaa raaka-aineita</a></p>
+        <p><a style="color: #0216ae; font-family: papyrus" href="/tilastot">Lue tilastoja raaka-aineiden käytöstä.</a></p>
     </body>
 </html>
 
