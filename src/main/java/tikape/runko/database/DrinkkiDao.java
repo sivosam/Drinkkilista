@@ -134,10 +134,12 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
         return drinkki;
     }
 
-    public List<RaakaAine> findAllRaakaAine() throws SQLException {
+    public List<RaakaAine> findAllRaakaAine(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT Raakaaine.nimi FROM Drinkkiraakaaine, Drinkki, Raakaaine"
-                + " WHERE drinkki.id = drinkkiraakaaine.drinkki_id and raakaaine.id = drinkkiraakaaine.raaka_aine_id;");
+                + " WHERE drinkki.id = drinkkiraakaaine.drinkki_id and raakaaine.id = drinkkiraakaaine.raaka_aine_id and drinkki.id = ?");
+        
+        stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
         List<RaakaAine> ra = new ArrayList<>();

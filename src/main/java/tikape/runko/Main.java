@@ -36,7 +36,6 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        //
         //Drinkit-sivu
         get("/drinkit", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -75,12 +74,11 @@ public class Main {
         get("/drinkit/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
-            map.put("raakaaineet", drinkkiDao.findAllRaakaAine());
+            map.put("drinkinRaakaaineet", drinkkiDao.findAllRaakaAine(Integer.parseInt(req.params("id"))));
 
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
-
-        //
+        
         //Raaka-aineet-sivu
         post("/raakaaineet", (req, res) -> {
             if (req.queryParams("nimi").equals("")) {
@@ -104,8 +102,7 @@ public class Main {
 
             return new ModelAndView(map, "raakaaineet");
         }, new ThymeleafTemplateEngine());
-
-        //
+        
         //Tilastot-sivu
         get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();
