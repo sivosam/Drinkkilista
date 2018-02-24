@@ -6,16 +6,20 @@
         <meta charset="utf-8" />
     </head>
 
-    <body>
-        <h1><span th:text="${drinkki.nimi}"></span></h1>
+    <body style="background-color: #ff9aa3">
+        <h1 style="color: #53d6ec; font-family: sans-serif; font-family: Comic Sans MS, Comic Sans;">
+            <span th:text="${drinkki.nimi}"></span></h1>
 
-        <p>Resepti:</p>
+        <h2 style="color: #53fd65">Resepti:</h2>
         
         <ol>
             <li th:each="raakaaine : ${drinkinRaakaaineet}">
-                <span th:text="${raakaaine}">Raaka-aineen nimi ja määrä</span>
+                <span style="font-family: monospace; font-family: Times; color: #8954fd" th:text="${raakaaine}">Raaka-aineen nimi ja määrä</span>
             </li>
         </ol>
+        
+        
+        <p><a style="color: #53fd65; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
         
     </body>
 </html>

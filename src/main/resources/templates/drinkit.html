@@ -7,7 +7,7 @@
     </head>
 
     <body style="background-color: #ccccff">
-        <h1 style="color:#33ccff; font-family: Comic Sans MS, Comic Sans, cursive;">Drinkit</h1>
+        <h1 style="color:#ec141f; font-family: Comic Sans MS, Comic Sans, cursive;">Drinkit</h1>
 
         <!-- Drinkkien listaus ja poisto -->
         <ol>
@@ -23,7 +23,7 @@
         <!-- Drinkkien lisääminen -->
         <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
         <form method="POST" action="/drinkit">
-            <span>Drinkin nimi:</span><br/>
+            <span style="color: #ec141f; font-style: italic">Drinkin nimi:</span><br/>
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
@@ -31,8 +31,8 @@
         
         
         <!-- Raaka-aineiden lisääminen drinkkeihin-->
-        <h4>Lisää raaka-aineita</h4>
-        <form method="POST" action="/drinkit/lisaa-raaka-aine">
+        <h4 style="color: #fd0068; font-family: serif">Lisää raaka-aineita</h4>
+        <form style="color: #fd6400; font-family: fantasy" method="POST" action="/drinkit/lisaa-raaka-aine">
             Drinkin nimi:<br/>
             <select name ="lisaadrinkki"> <option th:each="drinkki : ${drinkit}" th:text="${drinkki.nimi}" th:value="${drinkki.id}">
 
@@ -58,7 +58,7 @@
         <!---->
 
 
-        <p><a style="color: #33ff00; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
+        <p><a style="color: #fa5118; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
 
     </body>
 </html>
