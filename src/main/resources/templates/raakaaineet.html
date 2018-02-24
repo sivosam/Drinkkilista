@@ -9,6 +9,7 @@
     <body style="background-color: #ccccff">
         <h1 style="color:#33ccff; font-family: Comic Sans MS, Comic Sans, cursive;">Raaka-aineet</h1>
 
+        <!-- Lista raaka-aineista ja toiminnallisuus poistamiselle -->
 
         <ol>
             <li th:each="raakaaine: ${raakaaineet}">
@@ -19,9 +20,7 @@
             </li>
         </ol>
 
-
-
-
+        <!-- Raaka-aineen lisääminen -->
 
         <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
         <form method="POST" action="/raakaaineet">

@@ -74,8 +74,9 @@ public class Main {
         get("/drinkit/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
-            map.put("drinkinRaakaaineet", drinkkiDao.findAllRaakaAine(Integer.parseInt(req.params("id"))));
-
+            // map.put("drinkinRaakaaineet", drinkkiDao.findAllRaakaAine(Integer.parseInt(req.params("id"))));
+            map.put("drinkinRaakaaineet", drinkkiDao.findRaakaAineNimiJaMaara(Integer.parseInt(req.params(":id"))));
+            
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
         

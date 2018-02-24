@@ -2,8 +2,6 @@ package tikape.runko.database;
 
 import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Database {
 

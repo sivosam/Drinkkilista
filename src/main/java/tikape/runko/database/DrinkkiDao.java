@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tikape.runko.database;
 
 import java.sql.Connection;
@@ -12,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Drinkki;
-import tikape.runko.domain.DrinkkiRaakaAine;
 import tikape.runko.domain.RaakaAine;
 
 public class DrinkkiDao implements Dao<Drinkki, Integer> {
@@ -147,6 +141,31 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
             String raaka_aine_nimi = rs.getString("nimi");
 
             ra.add(new RaakaAine(null, raaka_aine_nimi));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return ra;
+    }
+    
+        public List<String> findRaakaAineNimiJaMaara (Integer key) throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT raakaaine.nimi as nimi, drinkkiraakaaine.maara as maara"
+                + " FROM DrinkkiRaakaAine, RaakaAine, Drinkki WHERE drinkki.id = drinkkiraakaaine.drinkki_id"
+                + " AND raakaaine.id = drinkkiraakaaine.raaka_aine_id"
+                + " AND drinkki_id = ?");
+        
+        stmt.setInt(1, key);
+
+        ResultSet rs = stmt.executeQuery();
+        List<String> ra = new ArrayList<>();
+        while (rs.next()) {
+            String raaka_aine_nimi = rs.getString("nimi");
+            String maara = rs.getString("maara");
+
+            ra.add(raaka_aine_nimi + ", " + maara);
         }
 
         rs.close();
