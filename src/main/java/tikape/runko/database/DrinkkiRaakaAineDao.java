@@ -17,12 +17,13 @@ public class DrinkkiRaakaAineDao {
         this.database = database;
     }
 
-    public DrinkkiRaakaAine findOne(Integer key) throws SQLException {
+    public DrinkkiRaakaAine findOne(Integer key, Integer key2) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM DrinkkiRaakaAine WHERE raaka_aine_id = ?"
                 + " AND drinkki_id = ?");
 
         stmt.setObject(1, key);
+        stmt.setObject(2, key2);
 
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
@@ -55,7 +56,7 @@ public class DrinkkiRaakaAineDao {
         while (rs.next()) {
             Integer raaka_aine_id = rs.getInt("raaka_aine_id");
             Integer drinkki_id = rs.getInt("drinkki_id");
-            String jarjestys = rs.getString("nimi");
+            String jarjestys = rs.getString("jarjestys");
             String maara = rs.getString("maara");
             String ohje = rs.getString("ohje");
 
@@ -68,29 +69,27 @@ public class DrinkkiRaakaAineDao {
 
         return drat;
     }
-
-    public void delete(Integer key, Integer key2) throws SQLException {
+    
+    public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM DrinkkiRaakaAine WHERE raaka_aine_id = ?"
-                + " AND drinkki_id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM DrinkkiRaakaAine WHERE drinkki_id = ?");
 
         stmt.setInt(1, key);
-        stmt.setInt(2, key2);
         stmt.executeUpdate();
 
         stmt.close();
         conn.close();
     }
-
+    
     public DrinkkiRaakaAine saveOrUpdate(DrinkkiRaakaAine object) throws SQLException {
-        if (object.getRaakaAineId() == null && object.getDrinkkiId() == null) {
+        if (object.getRaakaAineId() == null || object.getDrinkkiId() == null) {
             return save(object);
         } else {
             return update(object);
         }
     }
 
-    private DrinkkiRaakaAine save(DrinkkiRaakaAine drinkkira) throws SQLException {
+    public DrinkkiRaakaAine save(DrinkkiRaakaAine drinkkira) throws SQLException {
 
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO DrinkkiRaakaAine"
@@ -101,17 +100,18 @@ public class DrinkkiRaakaAineDao {
         stmt.setString(3, drinkkira.getJarjestys());
         stmt.setString(4, drinkkira.getMaara());
         stmt.setString(5, drinkkira.getOhje());
-
+        
         stmt.executeUpdate();
         stmt.close();
 
         stmt = conn.prepareStatement("SELECT * FROM DrinkkiRaakaAine"
-                + " WHERE jarjestys = ?");
-        stmt.setString(3, drinkkira.getJarjestys());
+                + " WHERE raaka_aine_id = ? AND drinkki_id = ?");
+        stmt.setInt(1, drinkkira.getRaakaAineId());
+        stmt.setInt(2, drinkkira.getDrinkkiId());
 
         ResultSet rs = stmt.executeQuery();
         rs.next();
-
+        
         DrinkkiRaakaAine dra = new DrinkkiRaakaAine(rs.getInt("raaka_aine_id"), rs.getInt("drinkki_id"),
                 rs.getString("jarjestys"), rs.getString("maara"), rs.getString("ohje"));
 

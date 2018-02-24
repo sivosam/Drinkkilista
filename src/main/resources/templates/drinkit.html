@@ -9,7 +9,7 @@
     <body style="background-color: #ccccff">
         <h1 style="color:#33ccff; font-family: Comic Sans MS, Comic Sans, cursive;">Drinkit</h1>
 
-
+        <!-- Drinkkien listaus ja poisto -->
         <ol>
             <li th:each="drinkki: ${drinkit}">
                 <span style="color: #990099; font-family: fantasy;" th:text="${drinkki.nimi}">drinkin nimi</span> 
@@ -18,19 +18,23 @@
                 </form>
             </li>
         </ol>
-
+        <!---->
+        
+        <!-- Drinkkien lisääminen -->
         <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
         <form method="POST" action="/drinkit">
             <span>Drinkin nimi:</span><br/>
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
-
-
+        <!---->
+        
+        
+        <!-- Raaka-aineiden lisääminen drinkkeihin-->
         <h4>Lisää raaka-aineita</h4>
-        <form>
+        <form method="POST" action="/drinkit/lisaa-raaka-aine">
             Drinkin nimi:<br/>
-            <select> <option th:each="drinkki : ${drinkit}" th:text="${drinkki.nimi}">
+            <select name ="lisaadrinkki"> <option th:each="drinkki : ${drinkit}" th:text="${drinkki.nimi}" th:value="${drinkki.id}">
 
                 </option>
 
@@ -38,20 +42,20 @@
             <br/>
             Lisättävä raaka-aine<br/>
 
-            <select> <option th:each="raakaaine : ${raakaaineet}" th:text="${raakaaine.nimi}">
-
+             <select name="lisaaraakaaine"> <option th:each="raakaaine : ${raakaaineet}" th:text="${raakaaine.nimi}" th:value="${raakaaine.id}">
                 </option>
             </select>
+
             <br/>
             Järjestys<br/>
-            <input type="text"/><br/>
+            <input type="text" name="jarjestys"/><br/>
             Määrä<br/>
-            <input type="text"/><br/>
+            <input type="text" name="maara"/><br/>
             Ohje<br/>
-            <input type="text"/><br/>
+            <input type="text" name="ohje"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
-
+        <!---->
 
 
         <p><a style="color: #33ff00; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
