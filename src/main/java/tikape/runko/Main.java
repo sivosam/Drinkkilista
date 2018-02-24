@@ -10,12 +10,14 @@ import tikape.runko.database.DrinkkiDao;
 import tikape.runko.database.DrinkkiRaakaAineDao;
 import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Drinkki;
+import tikape.runko.domain.DrinkkiRaakaAine;
 import tikape.runko.domain.RaakaAine;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
+        
+        
         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
@@ -59,6 +61,13 @@ public class Main {
             }
             raakaAineDao.saveOrUpdate(new RaakaAine(null, req.queryParams("nimi")));
             res.redirect("/raakaaineet");
+            return "";
+        });
+        
+        post("/drinkit/lisaa-raaka-aine", (req, res) -> {
+            drad.saveOrUpdate(new DrinkkiRaakaAine(Integer.parseInt(req.params("raaka_aine_id")), Integer.parseInt(req.params("drinkki_id")), 
+                    req.queryParams("jarjestys"), req.queryParams("maara"), req.queryParams("ohje")));
+            res.redirect("/drinkit");
             return "";
         });
 
