@@ -1,6 +1,7 @@
 package tikape.runko;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
@@ -30,8 +31,13 @@ public class Main {
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
         DrinkkiRaakaAineDao drad = new DrinkkiRaakaAineDao(database);
-        
-        Tilastot tilastot = new Tilastot(database);
+        Tilastot tilas = new Tilastot(database);
+        for (Tilasto t : tilas.getTilastojoukko()) {
+            HashSet<Drinkki> setti = t.getDrinkit();
+            for(Drinkki d : setti) {
+                System.out.println(d.getNimi());
+            }
+        }
 
         //Alkusivu
         get("/", (req, res) -> {
@@ -111,6 +117,10 @@ public class Main {
         //Tilastot-sivu
         get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();
+            Tilastot tilastot = new Tilastot(database);
+            // tähän mappiin voi laittaa kaiken mitä haluaa näyttää sivulla
+            // kunhan mapin avaimena on String ja se String pitää myös kirjoittaa
+            // sinne html-tiedostoon.
             map.put("raakaaineet", raakaAineDao.findAll());
             map.put("tilastoja", tilastot.getTilastojoukko());
 

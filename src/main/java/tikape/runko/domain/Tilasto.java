@@ -57,9 +57,6 @@ public class Tilasto {
     }
 
     public HashSet<Drinkki> getDrinkit() throws SQLException {
-        for (Integer id : this.drinkitIdt) {
-            this.drinkit.add(drDao.findOne(id));
-        }
         return this.drinkit;
     }
     

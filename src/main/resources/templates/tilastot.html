@@ -8,23 +8,25 @@
 
     <body style="background-color: #48659f">
         <h1 style="color:#33ccff; font-family:Comics Sans MS;">Tilastoja</h1>
-
-        <ol>
+        <!-- tämä alla oleva kommentoitu koodi kyllä toimii-->
+        <!--ol>
             <li th:each="raakaaine: ${raakaaineet}">
                 <span th:text="${raakaaine.nimi}">raaka-aineen nimi</span>
             </li>
-        </ol>
+        </ol-->
 
         <ol>
+            <!-- Thymeleafissa jätetään get-osa pois metodeista esim. <span th:text='${tilasto.raakaAineNimi}'>raakaaineen nimi</span>
+            Thymeleaf etsii tilasto.raakaAineNimi-kutsulle tilasto-olion getRaakaAineNimi metodia.-->
             <li th:each="tilasto: ${tilastoja}">
-                <span th:text='${tilasto.RaakaAineNimi}'>raakaaineen nimi</span>
+                <span th:text='${tilasto.raakaAineNimi}'>raakaaineen nimi</span>
                 <span>esiintyy näin monessa drinkissä:</span>
                 <span th:text='${tilasto.monessakoDrinkissa}'>montako drinkkia</span>
-                <ol>
-                    <!--li th:each="tilasto: $(tilastoja)">
+                <ul>
+                    <li th:each="drinkki: ${tilasto.drinkit}">
                         <span th:text='${drinkki.nimi}'>drinkkien nimet</span>
-                    </li-->
-                </ol>
+                    </li>
+                </ul>
             </li>
         </ol>
 
