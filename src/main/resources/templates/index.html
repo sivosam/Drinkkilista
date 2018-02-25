@@ -13,7 +13,7 @@
         <ol>
             <li th:each="drinkki: ${drinkit}">
                 <span style="color: #ff5900; font-family: monospace, Comic Sans MS;" th:text="${drinkki.nimi}">drinkin nimi</span> 
-                <a style="font-family: fantasy" th:href="${'/drinkit/' + drinkki.id}">-></a>
+                <a style="font-family: fantasy" th:href="${'/drinkit/' + drinkki.id + '/' + drinkki.nimi}">-></a>
             </li>
         </ol>
         <p><a style="color: #ff00f9; font-family: papyrus" href="/drinkit">Muokkaa drinkkejä.</a></p>

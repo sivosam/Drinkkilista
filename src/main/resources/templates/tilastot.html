@@ -5,7 +5,7 @@
         <title>Tilastoja</title>
         <meta charset="UTF-8"/>
     </head>
-    
+
     <body style="background-color: #48659f">
         <h1 style="color:#33ccff; font-family:Comics Sans MS;">Tilastoja</h1>
 
@@ -14,7 +14,20 @@
                 <span th:text="${raakaaine.nimi}">raaka-aineen nimi</span>
             </li>
         </ol>
-        
+
+        <ol>
+            <li th:each="tilasto: ${tilastoja}">
+                <span th:text='${tilasto.RaakaAineNimi}'>raakaaineen nimi</span>
+                <span>esiintyy näin monessa drinkissä:</span>
+                <span th:text='${tilasto.monessakoDrinkissa}'>montako drinkkia</span>
+                <ol>
+                    <!--li th:each="tilasto: $(tilastoja)">
+                        <span th:text='${drinkki.nimi}'>drinkkien nimet</span>
+                    </li-->
+                </ol>
+            </li>
+        </ol>
+
         <p><a style="color: #53fd65; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
     </body>
 </html>

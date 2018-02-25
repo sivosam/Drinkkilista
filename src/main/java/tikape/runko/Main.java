@@ -1,6 +1,7 @@
 package tikape.runko;
 
 import java.util.HashMap;
+import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
 import static spark.Spark.*;
@@ -12,6 +13,8 @@ import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Drinkki;
 import tikape.runko.domain.DrinkkiRaakaAine;
 import tikape.runko.domain.RaakaAine;
+import tikape.runko.domain.Tilasto;
+import tikape.runko.domain.Tilastot;
 
 public class Main {
 
@@ -27,6 +30,8 @@ public class Main {
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
         DrinkkiRaakaAineDao drad = new DrinkkiRaakaAineDao(database);
+        
+        Tilastot tilastot = new Tilastot(database);
 
         //Alkusivu
         get("/", (req, res) -> {
@@ -71,7 +76,7 @@ public class Main {
         });
 
         //Yksittäisen drinkin resepti-sivu
-        get("/drinkit/:id", (req, res) -> {
+        get("/drinkit/:id/:name", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
             map.put("drinkinRaakaaineet", drinkkiDao.findRaakaAineNimiJaMaara(Integer.parseInt(req.params(":id"))));
@@ -107,6 +112,7 @@ public class Main {
         get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("raakaaineet", raakaAineDao.findAll());
+            map.put("tilastoja", tilastot.getTilastojoukko());
 
             return new ModelAndView(map, "tilastot");
         }, new ThymeleafTemplateEngine());
