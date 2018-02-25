@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import tikape.runko.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 import tikape.runko.database.Database;
 import tikape.runko.database.DrinkkiDao;
 import tikape.runko.database.DrinkkiRaakaAineDao;
@@ -15,6 +14,7 @@ public class Tilasto {
     private RaakaAine raakaaine;
     private HashSet<Integer> drinkitIdt;
     private HashSet<Drinkki> drinkit;
+    private ArrayList<String> drinkkiNimet;
     private Database database;
     private DrinkkiRaakaAineDao draDao;
     private DrinkkiDao drDao;
@@ -40,5 +40,13 @@ public class Tilasto {
             this.drinkit.add(drDao.findOne(id));
         }
         return this.drinkit;
+    }
+    
+    public ArrayList<String> getDrinkkienNimet() throws SQLException {
+        for (Integer id : this.drinkitIdt) {
+            this.drinkkiNimet.add(drDao.findOne(id).getNimi());
+        }
+        
+        return this.drinkkiNimet;
     }
 }
