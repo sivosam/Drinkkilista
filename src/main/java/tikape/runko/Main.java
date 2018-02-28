@@ -25,19 +25,12 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-
+        
         Database database = new Database();
 
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
         RaakaAineDao raakaAineDao = new RaakaAineDao(database);
         DrinkkiRaakaAineDao drad = new DrinkkiRaakaAineDao(database);
-        Tilastot tilas = new Tilastot(database);
-        for (Tilasto t : tilas.getTilastojoukko()) {
-            HashSet<Drinkki> setti = t.getDrinkit();
-            for(Drinkki d : setti) {
-                System.out.println(d.getNimi());
-            }
-        }
 
         //Alkusivu
         get("/", (req, res) -> {
@@ -85,7 +78,7 @@ public class Main {
         get("/drinkit/:id/:name", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
-            map.put("drinkinRaakaaineet", drinkkiDao.findRaakaAineNimiJaMaara(Integer.parseInt(req.params(":id"))));
+            map.put("drinkinRaakaaineet", drinkkiDao.findRaakaAineNimiMaaraOhje(Integer.parseInt(req.params("id"))));
             
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
@@ -102,6 +95,7 @@ public class Main {
         });
 
         post("/deletera/:id", (req, res) -> {
+            drad.deleteMany(Integer.parseInt(req.params("id")));
             raakaAineDao.delete(Integer.parseInt(req.params("id")));
             res.redirect("/raakaaineet");
             return "";
@@ -110,7 +104,6 @@ public class Main {
         get("/raakaaineet", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("raakaaineet", raakaAineDao.findAll());
-
             return new ModelAndView(map, "raakaaineet");
         }, new ThymeleafTemplateEngine());
         

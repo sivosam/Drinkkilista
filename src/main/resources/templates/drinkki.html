@@ -1,25 +1,29 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+    
     <head>
         <title> Resepti </title>
         <meta charset="utf-8" />
+        <style>
+            h1 {color: #8954fd; font-family: sans-serif; font-style: italic;}
+            li, span {color: #8954fd; font-family: sans-serif; font-style: italic;}
+            h2, a {color: #53fd65; font-family: Comic Sans MS, Comic Sans;}
+        </style>
     </head>
 
     <body style="background-color: #ff9aa3">
-        <h1 style="color: #53d6ec; font-family: sans-serif; font-family: Comic Sans MS, Comic Sans;">
-            <span th:text="${drinkki.nimi}"></span></h1>
+        <h1><span th:text="${drinkki.nimi}"></span></h1>
 
-        <h2 style="color: #53fd65">Resepti:</h2>
+        <h2>Resepti:</h2>
         
         <ol>
             <li th:each="raakaaine : ${drinkinRaakaaineet}">
-                <span style="font-family: monospace; font-family: Times; color: #8954fd" th:text="${raakaaine}">Raaka-aineen nimi ja määrä</span>
+                <span th:text="${raakaaine}">Raaka-aineen nimi ja määrä</span>
             </li>
         </ol>
         
         
-        <p><a style="color: #53fd65; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
+        <p><a href="/">Takaisin</a></p>
         
     </body>
 </html>

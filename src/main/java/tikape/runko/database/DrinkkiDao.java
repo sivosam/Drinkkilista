@@ -132,7 +132,7 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT Raakaaine.nimi FROM Drinkkiraakaaine, Drinkki, Raakaaine"
                 + " WHERE drinkki.id = drinkkiraakaaine.drinkki_id and raakaaine.id = drinkkiraakaaine.raaka_aine_id and drinkki.id = ?");
-        
+
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -149,14 +149,15 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
 
         return ra;
     }
-    
-        public List<String> findRaakaAineNimiJaMaara (Integer key) throws SQLException {
+
+    public List<String> findRaakaAineNimiMaaraOhje(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT raakaaine.nimi as nimi, drinkkiraakaaine.maara as maara"
+        PreparedStatement stmt = connection.prepareStatement("SELECT raakaaine.nimi AS nimi, drinkkiraakaaine.maara AS maara,"
+                + " drinkkiraakaaine.ohje AS ohje"
                 + " FROM DrinkkiRaakaAine, RaakaAine, Drinkki WHERE drinkki.id = drinkkiraakaaine.drinkki_id"
                 + " AND raakaaine.id = drinkkiraakaaine.raaka_aine_id"
                 + " AND drinkki_id = ?");
-        
+
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -164,8 +165,18 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
         while (rs.next()) {
             String raaka_aine_nimi = rs.getString("nimi");
             String maara = rs.getString("maara");
+            String ohje = rs.getString("ohje");
 
-            ra.add(raaka_aine_nimi + ", " + maara);
+            if (maara.equals("") && ohje.equals("")) {
+                ra.add(raaka_aine_nimi);
+            } else if (ohje.equals("")) {
+                ra.add(raaka_aine_nimi + ", " + maara);
+            } else if (maara.equals("")) {
+                ra.add(raaka_aine_nimi + ". Ohje: " + ohje);
+            } else {
+                ra.add(raaka_aine_nimi + ", " + maara + ". Ohje: " + ohje);
+            }
+
         }
 
         rs.close();

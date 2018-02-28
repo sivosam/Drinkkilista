@@ -4,16 +4,20 @@
     <head>
         <title>Raaka-aineet</title>
         <meta charset="utf-8" />
+        <style>
+            h1, h2 , a {color: #db00ff; font-family: Comic Sans MS, Comic Sans, cursive;}
+            span, li {color: #ff8300; font-family: fantasy; font-style: italic;}
+        </style>
     </head>
 
     <body style="background-color: #63fff8">
-        <h1 style="color:#ff9f00; font-family: Comic Sans MS, Comic Sans, cursive;">Raaka-aineet</h1>
+        <h1>Raaka-aineet</h1>
 
         <!-- Lista raaka-aineista ja toiminnallisuus poistamiselle -->
 
         <ol>
             <li th:each="raakaaine: ${raakaaineet}">
-                <span style="color: #ff6700" th:text="${raakaaine.nimi}">raaka-aineen nimi</span>
+                <span th:text="${raakaaine.nimi}">raaka-aineen nimi</span>
                 <form th:action="@{~/deletera/{id}(id=${raakaaine.id})}" method="POST">
                     <input type="submit" value="Poista"/>
                 </form>
@@ -22,14 +26,14 @@
 
         <!-- Raaka-aineen lisääminen -->
 
-        <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
+        <h2>Lisää uusi</h2>
         <form method="POST" action="/raakaaineet">
             <span style="color: #f57202">Raaka-aineen nimi:</span><br/>
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
 
-        <p><a style="color: #f57202; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
+        <p><a href="/">Takaisin</a></p>
 
     </body>
 </html>

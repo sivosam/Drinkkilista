@@ -5,15 +5,20 @@
     <head>
         <title>Drinkkilista!</title>
         <meta charset="utf-8" />
+        <style>
+            h1 {color:#33ccff; font-family:Comics Sans MS;}
+            li, span, a {color: #ff5900; font-family: monospace, Comic Sans MS;}
+        </style>
+        
     </head>
 
     <body style="background-color: #ccffcc">
-        <h1 style="color:#33ccff; font-family:Comics Sans MS;">Drinkkilista!</h1>
+        <h1>Drinkkilista!</h1>
 
         <ol>
             <li th:each="drinkki: ${drinkit}">
-                <span style="color: #ff5900; font-family: monospace, Comic Sans MS;" th:text="${drinkki.nimi}">drinkin nimi</span> 
-                <a style="font-family: fantasy" th:href="${'/drinkit/' + drinkki.id + '/' + drinkki.nimi}">-></a>
+                <span th:text="${drinkki.nimi}">drinkin nimi</span> 
+                <a style="color: #33ccff" th:href="${'/drinkit/' + drinkki.id + '/' + drinkki.nimi}"> > </a>
             </li>
         </ol>
         <p><a style="color: #ff00f9; font-family: papyrus" href="/drinkit">Muokkaa drinkkejä.</a></p>

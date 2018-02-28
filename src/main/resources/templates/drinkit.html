@@ -1,18 +1,23 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Drinksuja!</title>
         <meta charset="utf-8" />
+        <style>
+            h1, h2, h4, a {color:#48fff2; font-family: Comic Sans MS, Comic Sans;}
+            li, span, form {color: #990099; font-family: fantasy; font-style: italic}
+            
+        </style>
     </head>
 
     <body style="background-color: #ccccff">
-        <h1 style="color:#ec141f; font-family: Comic Sans MS, Comic Sans, cursive;">Drinkit</h1>
+        <h1>Drinkit</h1>
 
         <!-- Drinkkien listaus ja poisto -->
         <ol>
             <li th:each="drinkki: ${drinkit}">
-                <span style="color: #990099; font-family: fantasy;" th:text="${drinkki.nimi}">drinkin nimi</span> 
+                <span th:text="${drinkki.nimi}">drinkin nimi</span> 
                 <form th:action="@{~/delete/{id}(id=${drinkki.id})}" method="POST">
                     <input type="submit" value="Poista"/>
                 </form>
@@ -21,9 +26,9 @@
         <!---->
         
         <!-- Drinkkien lisääminen -->
-        <h2 style="color: #ff6666; font-family: papyrus;">Lisää uusi</h2>
+        <h2>Lisää uusi</h2>
         <form method="POST" action="/drinkit">
-            <span style="color: #ec141f; font-style: italic">Drinkin nimi:</span><br/>
+            <span>Drinkin nimi:</span><br/>
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää"/>
         </form>
@@ -31,8 +36,8 @@
         
         
         <!-- Raaka-aineiden lisääminen drinkkeihin-->
-        <h4 style="color: #fd0068; font-family: serif">Lisää raaka-aineita</h4>
-        <form style="color: #fd6400; font-family: fantasy" method="POST" action="/drinkit/lisaa-raaka-aine">
+        <h4>Lisää raaka-aineita</h4>
+        <form method="POST" action="/drinkit/lisaa-raaka-aine">
             Drinkin nimi:<br/>
             <select name ="lisaadrinkki"> <option th:each="drinkki : ${drinkit}" th:text="${drinkki.nimi}" th:value="${drinkki.id}">
 
@@ -46,9 +51,9 @@
                 </option>
             </select>
 
-            <br/>
+            <!-- <br/>
             Järjestys<br/>
-            <input type="text" name="jarjestys"/><br/>
+            <input type="text" name="jarjestys"/> --> <br/>
             Määrä<br/>
             <input type="text" name="maara"/><br/>
             Ohje<br/>
@@ -58,7 +63,7 @@
         <!---->
 
 
-        <p><a style="color: #fa5118; font-family: Comic Sans MS, Comic Sans, fantasy;" href="/">Takaisin</a></p>
+        <p><a href="/">Takaisin</a></p>
 
     </body>
 </html>

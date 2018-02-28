@@ -69,7 +69,22 @@ public class DrinkkiRaakaAineDao {
 
         return drat;
     }
+
     
+    //Tämä metodi sitä varten, että raaka-ainetta poistaessa voidaan poistaa myös kyseinen raaka-aine kaikista drinkeistä
+    public void deleteMany(Integer key) throws SQLException {
+
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM DrinkkiRaakaAine WHERE raaka_aine_id = ?");
+
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+
+    }
+
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM DrinkkiRaakaAine WHERE drinkki_id = ?");
@@ -80,7 +95,7 @@ public class DrinkkiRaakaAineDao {
         stmt.close();
         conn.close();
     }
-    
+
     public DrinkkiRaakaAine saveOrUpdate(DrinkkiRaakaAine object) throws SQLException {
         if (object.getRaakaAineId() == null || object.getDrinkkiId() == null) {
             return save(object);
@@ -100,7 +115,7 @@ public class DrinkkiRaakaAineDao {
         stmt.setString(3, drinkkira.getJarjestys());
         stmt.setString(4, drinkkira.getMaara());
         stmt.setString(5, drinkkira.getOhje());
-        
+
         stmt.executeUpdate();
         stmt.close();
 
@@ -111,7 +126,7 @@ public class DrinkkiRaakaAineDao {
 
         ResultSet rs = stmt.executeQuery();
         rs.next();
-        
+
         DrinkkiRaakaAine dra = new DrinkkiRaakaAine(rs.getInt("raaka_aine_id"), rs.getInt("drinkki_id"),
                 rs.getString("jarjestys"), rs.getString("maara"), rs.getString("ohje"));
 
@@ -142,6 +157,5 @@ public class DrinkkiRaakaAineDao {
 
         return drinkkira;
     }
-
 
 }
