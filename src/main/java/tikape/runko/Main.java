@@ -16,12 +16,16 @@ import tikape.runko.domain.Tilastot;
 
 public class Main {
 
+    
+    
     public static void main(String[] args) throws Exception {
 
         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
+        
+        String style = "style='color: #db00ff;'";
 
         Database database = new Database();
 
@@ -66,7 +70,8 @@ public class Main {
                 try {
                     jarjestys = Integer.parseInt(req.queryParams("jarjestys"));
                 } catch (NumberFormatException e) {
-                    return "Syötä kokonaisluku Järjestys-kenttään!";
+                    return "<html><body style='background-color: #ccccff'><h1 " + style + "> :( </h1>"
+                            + "<h2 " + style + ">Syötä kokonaisluku Järjestys-kenttään!</h2></body></html>";
                 }
             }
             

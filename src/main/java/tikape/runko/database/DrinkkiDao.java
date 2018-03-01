@@ -168,18 +168,8 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
             String raaka_aine_nimi = rs.getString("nimi");
             String maara = rs.getString("maara");
             String ohje = rs.getString("ohje");
-            //String jarjestys = Integer.toString(rs.getInt("jarjestys"));
             Integer jarjestysluku = rs.getInt("jarjestys");
 
-//            if (maara.equals("") && ohje.equals("")) {
-//                ra.add(raaka_aine_nimi);
-//            } else if (ohje.equals("")) {
-//                ra.add(raaka_aine_nimi + ", " + maara);
-//            } else if (maara.equals("")) {
-//                ra.add(raaka_aine_nimi + ". Ohje: " + ohje);
-//            } else {
-//                ra.add(raaka_aine_nimi + ", " + maara + ". Ohje: " + ohje);
-//            }
             String kaikkiKohdat = "";
             // Jos järjestys-parametria ei syötetä sivulla niin laitetaan raaka-aine listan loppuun ja annetaan indeksin mukainen järjestys
             if (jarjestysluku - 1 < 0 || jarjestysluku - 1 > ra.size()) {
