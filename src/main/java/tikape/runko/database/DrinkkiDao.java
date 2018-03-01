@@ -152,7 +152,9 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
 
     public List<String> findRaakaAineNimiMaaraOhje(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT raakaaine.nimi AS nimi, drinkkiraakaaine.maara AS maara,"
+        PreparedStatement stmt = connection.prepareStatement("SELECT raakaaine.nimi AS nimi,"
+                + " drinkkiraakaaine.jarjestys AS jarjestys,"
+                + " drinkkiraakaaine.maara AS maara,"
                 + " drinkkiraakaaine.ohje AS ohje"
                 + " FROM DrinkkiRaakaAine, RaakaAine, Drinkki WHERE drinkki.id = drinkkiraakaaine.drinkki_id"
                 + " AND raakaaine.id = drinkkiraakaaine.raaka_aine_id"
@@ -166,16 +168,34 @@ public class DrinkkiDao implements Dao<Drinkki, Integer> {
             String raaka_aine_nimi = rs.getString("nimi");
             String maara = rs.getString("maara");
             String ohje = rs.getString("ohje");
+            //String jarjestys = Integer.toString(rs.getInt("jarjestys"));
+            Integer jarjestysluku = rs.getInt("jarjestys");
 
-            if (maara.equals("") && ohje.equals("")) {
-                ra.add(raaka_aine_nimi);
-            } else if (ohje.equals("")) {
-                ra.add(raaka_aine_nimi + ", " + maara);
-            } else if (maara.equals("")) {
-                ra.add(raaka_aine_nimi + ". Ohje: " + ohje);
-            } else {
-                ra.add(raaka_aine_nimi + ", " + maara + ". Ohje: " + ohje);
+//            if (maara.equals("") && ohje.equals("")) {
+//                ra.add(raaka_aine_nimi);
+//            } else if (ohje.equals("")) {
+//                ra.add(raaka_aine_nimi + ", " + maara);
+//            } else if (maara.equals("")) {
+//                ra.add(raaka_aine_nimi + ". Ohje: " + ohje);
+//            } else {
+//                ra.add(raaka_aine_nimi + ", " + maara + ". Ohje: " + ohje);
+//            }
+            String kaikkiKohdat = "";
+            // Jos järjestys-parametria ei syötetä sivulla niin laitetaan raaka-aine listan loppuun ja annetaan indeksin mukainen järjestys
+            if (jarjestysluku - 1 < 0 || jarjestysluku - 1 > ra.size()) {
+                jarjestysluku = ra.size() + 1;
             }
+            
+            kaikkiKohdat = kaikkiKohdat.concat(raaka_aine_nimi);
+            if (!maara.isEmpty()) {
+                kaikkiKohdat = kaikkiKohdat.concat(", " + maara);
+            }
+            if (!ohje.isEmpty()) {
+                kaikkiKohdat = kaikkiKohdat.concat(". Ohje: " + ohje);
+            }
+
+            ra.add(jarjestysluku - 1, kaikkiKohdat);
+            
 
         }
 

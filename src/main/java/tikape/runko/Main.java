@@ -1,8 +1,6 @@
 package tikape.runko;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
 import static spark.Spark.*;
@@ -14,7 +12,6 @@ import tikape.runko.database.RaakaAineDao;
 import tikape.runko.domain.Drinkki;
 import tikape.runko.domain.DrinkkiRaakaAine;
 import tikape.runko.domain.RaakaAine;
-import tikape.runko.domain.Tilasto;
 import tikape.runko.domain.Tilastot;
 
 public class Main {
@@ -25,7 +22,7 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-        
+
         Database database = new Database();
 
         DrinkkiDao drinkkiDao = new DrinkkiDao(database);
@@ -61,8 +58,22 @@ public class Main {
         });
 
         post("/drinkit/lisaa-raaka-aine", (req, res) -> {
+            Integer jarjestys;
+            if (req.queryParams("jarjestys").equals("")) {
+                jarjestys = 0;
+            } else {
+                // Try-catch tarkistaakseen että järjestys-kenttään on syötetty kokonaisluku.
+                try {
+                    jarjestys = Integer.parseInt(req.queryParams("jarjestys"));
+                } catch (NumberFormatException e) {
+                    return "Syötä kokonaisluku Järjestys-kenttään!";
+                }
+            }
+            
             drad.save(new DrinkkiRaakaAine(Integer.parseInt(req.queryParams("lisaaraakaaine")), Integer.parseInt(req.queryParams("lisaadrinkki")),
-                    req.queryParams("jarjestys"), req.queryParams("maara"), req.queryParams("ohje")));
+                        jarjestys, req.queryParams("maara"), req.queryParams("ohje")));
+
+
             res.redirect("/drinkit");
             return "";
         });
@@ -79,10 +90,10 @@ public class Main {
             HashMap map = new HashMap<>();
             map.put("drinkki", drinkkiDao.findOne(Integer.parseInt(req.params("id"))));
             map.put("drinkinRaakaaineet", drinkkiDao.findRaakaAineNimiMaaraOhje(Integer.parseInt(req.params("id"))));
-            
+
             return new ModelAndView(map, "drinkki");
         }, new ThymeleafTemplateEngine());
-        
+
         //Raaka-aineet-sivu
         post("/raakaaineet", (req, res) -> {
             if (req.queryParams("nimi").equals("")) {
@@ -106,7 +117,7 @@ public class Main {
             map.put("raakaaineet", raakaAineDao.findAll());
             return new ModelAndView(map, "raakaaineet");
         }, new ThymeleafTemplateEngine());
-        
+
         //Tilastot-sivu
         get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();

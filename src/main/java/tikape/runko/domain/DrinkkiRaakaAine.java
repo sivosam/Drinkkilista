@@ -4,11 +4,11 @@ public class DrinkkiRaakaAine {
 
     private Integer raaka_aine_id;
     private Integer drinkki_id;
-    private String jarjestys;
+    private Integer jarjestys;
     private String maara;
     private String ohje;
 
-    public DrinkkiRaakaAine(Integer raaka_aine_id, Integer drinkki_id, String jarjestys, String maara, String ohje) {
+    public DrinkkiRaakaAine(Integer raaka_aine_id, Integer drinkki_id, Integer jarjestys, String maara, String ohje) {
         this.raaka_aine_id = raaka_aine_id;
         this.drinkki_id = drinkki_id;
         this.jarjestys = jarjestys;
@@ -24,7 +24,7 @@ public class DrinkkiRaakaAine {
         return this.drinkki_id;
     }
 
-    public String getJarjestys() {
+    public Integer getJarjestys() {
         return this.jarjestys;
     }
 
@@ -44,7 +44,7 @@ public class DrinkkiRaakaAine {
         this.drinkki_id = id;
     }
     
-    public void setJarjestys (String jarjestys) {
+    public void setJarjestys (Integer jarjestys) {
         this.jarjestys = jarjestys;
     }
     

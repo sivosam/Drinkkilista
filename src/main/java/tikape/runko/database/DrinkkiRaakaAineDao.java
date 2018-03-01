@@ -33,7 +33,7 @@ public class DrinkkiRaakaAineDao {
 
         Integer raaka_aine_id = rs.getInt("raaka_aine_id");
         Integer drinkki_id = rs.getInt("drinkki_id");
-        String jarjestys = rs.getString("nimi");
+        Integer jarjestys = rs.getInt("jarjestys");
         String maara = rs.getString("maara");
         String ohje = rs.getString("ohje");
 
@@ -56,7 +56,7 @@ public class DrinkkiRaakaAineDao {
         while (rs.next()) {
             Integer raaka_aine_id = rs.getInt("raaka_aine_id");
             Integer drinkki_id = rs.getInt("drinkki_id");
-            String jarjestys = rs.getString("jarjestys");
+            Integer jarjestys = rs.getInt("jarjestys");
             String maara = rs.getString("maara");
             String ohje = rs.getString("ohje");
 
@@ -112,7 +112,7 @@ public class DrinkkiRaakaAineDao {
                 + " VALUES (?, ?, ?, ?, ?)");
         stmt.setInt(1, drinkkira.getRaakaAineId());
         stmt.setInt(2, drinkkira.getDrinkkiId());
-        stmt.setString(3, drinkkira.getJarjestys());
+        stmt.setInt(3, drinkkira.getJarjestys());
         stmt.setString(4, drinkkira.getMaara());
         stmt.setString(5, drinkkira.getOhje());
 
@@ -128,7 +128,7 @@ public class DrinkkiRaakaAineDao {
         rs.next();
 
         DrinkkiRaakaAine dra = new DrinkkiRaakaAine(rs.getInt("raaka_aine_id"), rs.getInt("drinkki_id"),
-                rs.getString("jarjestys"), rs.getString("maara"), rs.getString("ohje"));
+                rs.getInt("jarjestys"), rs.getString("maara"), rs.getString("ohje"));
 
         stmt.close();
         rs.close();
@@ -144,7 +144,7 @@ public class DrinkkiRaakaAineDao {
         PreparedStatement stmt = conn.prepareStatement("UPDATE DrinkkiRaakaAine SET"
                 + " jarjestys = ?, maara = ?, ohje = ?"
                 + " WHERE raaka_aine_id = ? AND drinkki_id = ?");
-        stmt.setString(1, drinkkira.getJarjestys());
+        stmt.setInt(1, drinkkira.getJarjestys());
         stmt.setString(2, drinkkira.getMaara());
         stmt.setString(3, drinkkira.getOhje());
         stmt.setInt(4, drinkkira.getRaakaAineId());
